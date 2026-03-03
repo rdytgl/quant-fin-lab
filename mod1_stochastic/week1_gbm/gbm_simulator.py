@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 
 # Set initial parameters
 s_0 = 100 
-mu_values = [0.05, 0.10, 0.15, 0.20]
-sigma_values = [0.10, 0.20, 0.30, 0.40]
+mu_values = [0.0, 0.10, 0.30, 0.50]
+sigma_values = [0.10, 0.30, 0.60, 1.00]
 T = 1 # time period
 N = 252 # number of steps
 dt = T / N # time step/delta t
@@ -28,5 +28,7 @@ for i, mu in enumerate(mu_values):
 
 plt.plot(prices.T, alpha=0.1, color='blue')
 plt.suptitle('gbm sim - 1000 paths @ 16 scenarios')
+fig.supxlabel('days')
+fig.supylabel('asset_price')
 plt.tight_layout()
 plt.show()
