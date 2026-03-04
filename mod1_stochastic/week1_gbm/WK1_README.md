@@ -7,6 +7,8 @@ The sigma effect is much more dramatic than the mu effect. A high mu just shifts
 
 Analysing the final asset prices, I also saw that the final price distribution of 1000 simulated paths show a right skew, but when taking the log of the final prices, it transforms the distribution into a normal one. I was actually able to observe this with an increased sigma (0.60 instead of 0.20) and by extending the time horizon to 2 years.
 
+Eventually I will get to check Ito's Lemma but for now I wanted to see what it even does, and with the [third code](gbm_sim_no_itos_lemma.py), it shows that the mean asset price is shifting higher than the expected mean price using the $s_0 * e^(\mu T)$
+
 ## 3. What do/es the code/s do?
 The [first code](gbm_simulator.py) simulates 1000 paths of an asset price starting at 100 with an annualised drift of 0.10 and annualised volatility of 0.20. I then edited this same code to analyse the final prices across the 1000 paths comparing raw price distribution against log-transformed prices.
 

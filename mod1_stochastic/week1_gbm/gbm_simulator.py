@@ -7,7 +7,7 @@ s_0 = 100
 mu = 0.10
 sigma = 0.60
 T = 2 # time period
-N = 252 # number of steps
+N = 252 * T # number of steps
 dt = T / N # time step/delta t
 num_paths = 1000 # number of simulations 
 
