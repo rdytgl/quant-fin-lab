@@ -25,6 +25,40 @@ for t in range(1, N+1):
 final_prices = prices[:, -1]
 log_final_prices = np.log(final_prices)
 
+# Computing arithmetic returns of a singular path
+arithmetic_returns = (prices[0, 1:] - prices[0, :-1]) / prices[0, :-1]
+
+# Computing log returns of a singular path
+log_returns = np.log(prices[0, 1:] / prices[0, :-1])
+
+# Plotting arithmetic returns & log returns, difference between arithmetic and log returns, 
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+# Plot 1 — Both returns overlaid
+axes[0].plot(arithmetic_returns, color='blue', alpha=0.7, label='arithmetic')
+axes[0].plot(log_returns, color='red', alpha=0.7, label='log')
+axes[0].set_title('Arithmetic vs Log Returns')
+axes[0].set_xlabel('Time Steps')
+axes[0].set_ylabel('Returns')
+axes[0].legend()
+
+# Plot 2 — Distributions
+axes[1].hist(arithmetic_returns, bins=50, color='blue', alpha=0.7, label='arithmetic')
+axes[1].hist(log_returns, bins=50, color='red', alpha=0.7, label='log')
+axes[1].set_title('Return Distributions')
+axes[1].set_xlabel('Returns')
+axes[1].set_ylabel('Frequency')
+axes[1].legend()
+
+# Plot 3 — Difference
+axes[2].plot(arithmetic_returns - log_returns, color='purple', alpha=0.7)
+axes[2].set_title('Difference: Arithmetic minus Log')
+axes[2].set_xlabel('Time Steps')
+axes[2].set_ylabel('Difference')
+
+plt.tight_layout()
+plt.show()
+
 # Plotting paths & final prices
 fig, ax = plt.subplots(1, 3, figsize=(16, 6))
 ax[0].plot(prices.T, color='blue', alpha=0.1)

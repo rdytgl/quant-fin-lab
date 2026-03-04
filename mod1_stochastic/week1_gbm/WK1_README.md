@@ -9,10 +9,16 @@ Analysing the final asset prices, I also saw that the final price distribution o
 
 Eventually I will get to check Ito's Lemma but for now I wanted to see what it even does, and with the [third code](gbm_sim_no_itos_lemma.py), it shows that the mean asset price is shifting higher than the expected mean price using the $S_0 e^{\mu T}$
 
+Comparing arithmetic and log returns on a single path shows they are nearly identical on a day-to-day basis — but this is deceptive. A simple example shows why: a 50% gain followed by a 50% loss leaves you down 25%, but arithmetic averaging suggests you broke even. Log returns correctly capture this compounding effect, which is why quant finance uses them exclusively.
+
 ## 3. What do/es the code/s do?
 The [first code](gbm_simulator.py) simulates 1000 paths of an asset price starting at 100 with an annualised drift of 0.10 and annualised volatility of 0.20. I then edited this same code to analyse the final prices across the 1000 paths comparing raw price distribution against log-transformed prices.
+
+The [first code](gbm_simulator.py) also takes a single simulated path and computes both arithmetic and log returns, plotting their overlap, their distributions, and their difference. The difference is always small but always positive — arithmetic returns systematically overstate performance.
 
 Using the base code, the [second code](gbm_simulator_scenarios.py) checks for how the different sigma and mu values affect the shape of the plot cone.
 
 ## 4. What surprised me?
-While exponential growth wasn’t a new concept to me, seeing the lognormal-to-normal transformation in my own simulation made it click differently. Asset prices can’t go negative but have theoretically infinite upside — the lognormal distribution captures exactly that asymmetry, and taking the log recovers the familiar normal distribution underneath.
+While exponential growth wasn’t a new concept to me, seeing the lognormal-to-normal transformation in my own simulation made it click differently. Asset prices can’t go negative but have theoretically infinite upside — the lognormal distribution captures exactly that asymmetry, and taking the log recovers the familiar normal distribution underneaths.
+
+I expected arithmetic and log returns to look different on a plot — they don't at the daily level. The difference only reveals itself through the compounding example, not visually. That gap between what you expect to see and what actually matters numerically was unexpected.
