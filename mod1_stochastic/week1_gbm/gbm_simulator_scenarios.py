@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Set initial parameters
 s_0 = 100 
-mu_values = [0.0, 0.10, 0.30, 0.50]
+mu_values = [0.05, 0.10, 0.30, 0.50]
 sigma_values = [0.10, 0.30, 0.60, 1.00]
 T = 1 # time period
 N = 252 # number of steps

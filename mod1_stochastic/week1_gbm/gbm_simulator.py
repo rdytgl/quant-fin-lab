@@ -37,24 +37,24 @@ fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 # Plot 1 — Both returns overlaid
 axes[0].plot(arithmetic_returns, color='blue', alpha=0.7, label='arithmetic')
 axes[0].plot(log_returns, color='red', alpha=0.7, label='log')
-axes[0].set_title('Arithmetic vs Log Returns')
-axes[0].set_xlabel('Time Steps')
-axes[0].set_ylabel('Returns')
+axes[0].set_title('arithmetic-v-log-returns')
+axes[0].set_xlabel('time steps')
+axes[0].set_ylabel('returns')
 axes[0].legend()
 
 # Plot 2 — Distributions
 axes[1].hist(arithmetic_returns, bins=50, color='blue', alpha=0.7, label='arithmetic')
 axes[1].hist(log_returns, bins=50, color='red', alpha=0.7, label='log')
-axes[1].set_title('Return Distributions')
-axes[1].set_xlabel('Returns')
-axes[1].set_ylabel('Frequency')
+axes[1].set_title('return-distrib')
+axes[1].set_xlabel('returns')
+axes[1].set_ylabel('freq')
 axes[1].legend()
 
 # Plot 3 — Difference
 axes[2].plot(arithmetic_returns - log_returns, color='purple', alpha=0.7)
-axes[2].set_title('Difference: Arithmetic minus Log')
-axes[2].set_xlabel('Time Steps')
-axes[2].set_ylabel('Difference')
+axes[2].set_title('diff-between-arith-and-log-returns')
+axes[2].set_xlabel('time-steps')
+axes[2].set_ylabel('diff')
 
 plt.tight_layout()
 plt.show()
