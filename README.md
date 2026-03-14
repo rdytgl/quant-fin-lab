@@ -37,7 +37,7 @@ Goal: Understand how markets are modeled before pricing anything.
 
 ---
 
-## [Week 2 — No-Arbitrage & Risk-Neutral Pricing](mod1_stochastic/week2__binomial/)
+## [Week 2 — No-Arbitrage & Risk-Neutral Pricing](mod1_stochastic/week2_binomial/)
 
 ### Concepts
 - Arbitrage logic
