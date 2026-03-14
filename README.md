@@ -20,7 +20,7 @@ Goal: Understand how markets are modeled before pricing anything.
 
 ---
 
-## Week 1 — Geometric Brownian Motion
+## [Week 1 — Geometric Brownian Motion](week1_gbm)
 
 ### Concepts
 - Random walks
@@ -37,7 +37,7 @@ Goal: Understand how markets are modeled before pricing anything.
 
 ---
 
-## Week 2 — No-Arbitrage & Risk-Neutral Pricing
+## [Week 2 — No-Arbitrage & Risk-Neutral Pricing](week2__binomial)
 
 ### Concepts
 - Arbitrage logic
