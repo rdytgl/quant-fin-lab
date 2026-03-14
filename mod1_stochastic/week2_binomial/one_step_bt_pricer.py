@@ -1,11 +1,11 @@
 import numpy as np
 
-s_0 = 20
-u = 1.1
-d = 0.9
-r = 0.04
-T = 0.25
-K = 21
+s_0 = 20 # initial stock price
+u = 1.1 # up factor
+d = 0.9 # down factor
+r = 0.04 # risk-free rate
+T = 0.25 # time to maturity in years
+K = 21 # strike price
 
 # Step 1: Calculate the stock price at time T
 s_u = s_0 * u  # Stock price if the stock goes up

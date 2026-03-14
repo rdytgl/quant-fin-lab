@@ -4,7 +4,7 @@ s_0 = 20
 u = 1.1
 d = 0.9
 r = 0.04
-dt = 0.25
+dt = 0.25 # changed to dt to reflect time step for n steps
 K = 21
 
 # Step 1: Calculate the stock price at time T
