@@ -9,6 +9,20 @@
 * in bsm, there are a few assumptions (constant volatility, constant checking, non-dividend paying, continuous trading). this makes the pricer created not the most robust but can introduce the idea of pricing using BSM
 * N(d2) is the probability that the option "expires in the money" i.e.: the exercise of the option will earn money
 * N(d1) is the "delta of the option" i.e.: how much the option moves for every $1 move in the stock
+* learned some jargon like ATM/ITM/OTM
+* in implied_vol, vega needs the value of the PDF as it is looking at the sensitivity of the probability of stock to small changes
+
+Initial idea for the code was to compute implied volatility using both call and put prices and verify consistency via put-call parity: C - P = S - K * exp(-rT)
+In theory, both call and put should yield the same implied volatility if prices are arbitrage-free.
+However, in practice:
+  - Small numerical inconsistencies (rounding, input errors) can break parity
+  - Deep OTM/ITM options (especially puts) have very low Vega, making Newton method unstable
+  - This can lead to unreliable or divergent implied volatility estimates for puts
+
+For stability and simplicity, we compute [implied volatility](implied_vol.py) using the call price only.
+In production settings, one would:
+  - enforce parity (convert put → synthetic call), or
+  - use a more robust solver (e.g., bisection with bounds)
 
 ## 3. What do/es the code/s do?
 The [first code](bsm_sim.py) allows input of the various variables to compute call and put prices.
