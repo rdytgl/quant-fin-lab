@@ -52,7 +52,7 @@ Goal: Understand how markets are modeled before pricing anything.
 
 ---
 
-## Week 3 — Black–Scholes Intuition
+## [Week 3 — Black–Scholes Intuition](mod1_stochastic/week3_black_scholes/)
 
 ### Concepts
 - Dynamic hedging
