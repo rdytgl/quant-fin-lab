@@ -13,7 +13,8 @@ sigma = float(input("Enter volatility (sigma): "))
 d_1 = (log(s_0/k)+(r+(sigma**2)/2)*T)/((sigma)*sqrt(T))
 
 # Calculate d2
-d_2 = d_1 - (sigma)*sqrt(T) 
+d_2 = d_1 - (sigma)*sqrt(T)
+ 
 # Calculate c
 c = s_0*norm.cdf(d_1)-k*exp(-r*T)*norm.cdf(d_2)
 
