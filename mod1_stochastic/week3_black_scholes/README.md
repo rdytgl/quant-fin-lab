@@ -28,6 +28,3 @@ In production settings, one would:
 The [first code](bsm_sim.py) allows input of the various variables to compute call and put prices.
 
 ## 4. What surprised me?
-* the use of the put-call parity relationship as a verification tool
-* this code was easier than the reading, which was the opposite from the previous weeks
-* that N(d1) is just the delta
