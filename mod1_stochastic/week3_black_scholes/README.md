@@ -1,30 +1,26 @@
 # Weekly Summary
+
 ## 1. What did I model?
-* bsm pricer
-* implied volatility using newton's method
+Built a Black-Scholes-Merton (BSM) pricer for European call and put options, and an implied volatility solver using Newton's method.
 
 ## 2. What is the key insight?
-* The BSM differential equation is a master equation that can produce a family of pricing formulas depending on the boundary conditions applied. This week I implemented the European call and put formulas, as well as the american call (same as the european call)
-* In the BSM formula, the drift (mu) disappears completely, confirming the learnings from [week 1](../week1_gbm/README.md) and [week 2](../week2_binomial/README.md) that only the risk-free rate matters, not the expected return of the stock
-* in bsm, there are a few assumptions (constant volatility, constant checking, non-dividend paying, continuous trading). this makes the pricer created not the most robust but can introduce the idea of pricing using BSM
-* N(d2) is the probability that the option "expires in the money" i.e.: the exercise of the option will earn money
-* N(d1) is the "delta of the option" i.e.: how much the option moves for every $1 move in the stock
-* learned some jargon like ATM/ITM/OTM
-* in implied_vol, vega needs the value of the PDF as it is looking at the sensitivity of the probability of stock to small changes
 
-Initial idea for the code was to compute implied volatility using both call and put prices and verify consistency via put-call parity: C - P = S - K * exp(-rT)
-In theory, both call and put should yield the same implied volatility if prices are arbitrage-free.
-However, in practice:
-  - Small numerical inconsistencies (rounding, input errors) can break parity
-  - Deep OTM/ITM options (especially puts) have very low Vega, making Newton method unstable
-  - This can lead to unreliable or divergent implied volatility estimates for puts
+The BSM differential equation is a master equation — different boundary conditions produce different pricing formulas. This week I implemented the European call and put, which share the same structure but give opposite exposures: calls profit from upside, puts profit from downside.
 
-For stability and simplicity, we compute [implied volatility](implied_vol.py) using the call price only.
-In production settings, one would:
-  - enforce parity (convert put → synthetic call), or
-  - use a more robust solver (e.g., bisection with bounds)
+The most important insight connecting back to [Weeks 1](../week1_gbm/README.md) and [2](../week2_binomial/README.md): **drift (μ) disappears entirely from BSM.** In the risk-neutral world, only the risk-free rate matters for pricing — not what the stock is expected to return. This held in the binomial tree and holds here in continuous time too.
 
-## 3. What do/es the code/s do?
-The [first code](bsm_sim.py) allows input of the various variables to compute call and put prices.
+Within the formula, N(d₂) is the probability the option expires in the money — i.e. the exercise will be profitable. N(d₁) is the option's delta — how much the option price moves per $1 move in the stock. This is the same delta from the Week 2 risk-less portfolio (0.25 shares), now expressed continuously.
+
+BSM assumes constant volatility, continuous trading, and no dividends — simplifications that make the math tractable but break in the real world. Weeks 8-10 address what happens when these assumptions fail.
+
+## 3. What do the codes do?
+
+The [BSM pricer](bsm_sim.py) takes S₀, K, r, σ, T as inputs and outputs fair call and put prices. Put-call parity (C - P = S - Ke^{-rT}) is used as a verification check — if the relationship holds, the pricer is correct.
+
+The [implied vol solver](implied_vol.py) inverts the BSM formula — given a market option price, it recovers the implied σ using Newton's method. The initial idea was to compute IV from both call and put prices and verify consistency via put-call parity. In practice, puts with low Vega caused Newton's method to diverge, so the solver uses call prices only. In production, one would either enforce parity by converting puts to synthetic calls, or use a more robust solver like bisection.
+
+The [Python notebook](black_scholes_merton.ipynb) consolidates both of the codes above and added verifiers and additional information about BSM and its related concepts.
 
 ## 4. What surprised me?
+
+The BSM formula looks intimidating but translates to roughly 35 lines of clean Python — the reading was harder than the coding, which was the opposite of Weeks 1 and 2. The put implied vol divergence was also unexpected — it showed that numerical methods have real limitations even when the math is theoretically sound.
