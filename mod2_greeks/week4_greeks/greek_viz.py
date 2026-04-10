@@ -53,26 +53,53 @@ def compute_gamma(S):
 
 # Compute for theta
 def compute_theta(S):
-    h = T * 0.005
+    h = min(1/365, T * 0.005)
     price = bsm(sigma, S, k, r, T, option_type)
     down = bsm(sigma, S, k, r, T - h, option_type)
     return (down - price)/h
 
 # Compute for vega
 def compute_vega(S):
-    h = sigma * 0.005
+    h = max(0.01, sigma * 0.005)
     up = bsm(sigma + h, S, k, r, T, option_type)
     down = bsm(sigma - h, S, k, r, T, option_type)
     return (up - down)/(2 * h)
 
-# Visualise all greeks in 2 x 2 grid
 # Compute plot points
+prices = [bsm(sigma, S, k, r, T, option_type) for S in stock_prices]
+
+# Compute tangent line
+S0 = s_0
+h = S0 * 0.005
+V0 = bsm(sigma, S0, k, r, T, option_type)
+d0 = compute_delta(S0)
+tangent = [V0 + d0 * (S - S0) for S in stock_prices]
+
+# Compute greeks
 deltas =[compute_delta(S) for S in stock_prices]
 gammas = [compute_gamma(S) for S in stock_prices]
 thetas = [compute_theta(S) for S in stock_prices]
 vegas = [compute_vega(S) for S in stock_prices]
 
-# Plot the values
+# Plot the price curve
+plt.figure()
+plt.plot(stock_prices, prices, label="Price")
+
+# Tangent line
+plt.plot(stock_prices, tangent, linestyle='--', label="Tangent (Delta)")
+
+# Highlight point
+plt.scatter([S0], [V0])
+
+# Strike line
+plt.axvline(x=k, linestyle='--', label='Strike')
+
+plt.title("Price Curve with Delta Tangent")
+plt.xlabel("Stock Price")
+plt.ylabel("Option Price")
+plt.legend()
+
+# Plot the greek values
 fig, axes = plt.subplots(2, 2, figsize=(12,8))
 
 axes[0, 0].plot(stock_prices, deltas)
