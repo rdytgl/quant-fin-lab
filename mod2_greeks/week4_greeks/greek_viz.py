@@ -12,7 +12,7 @@ sigma = float(input("Enter volatility (sigma): "))
 option_type = input("Type of Option: [C]all or [P]ut: ").strip().lower()
 
 # Generate 300 possible final stock price values ranging from 50% to 2.0x value of set initial price
-stock_prices = np.linspace(0.50*s_0, 2*s_0, 300)
+stock_prices = np.linspace(0.50*s_0, 1.5*s_0, 300)
 
 # Function for d1 and d2
 def d_1(sigma, s_0, k, r, T):
