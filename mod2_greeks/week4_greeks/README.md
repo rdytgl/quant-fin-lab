@@ -1,27 +1,22 @@
 # Weekly Summary
-
 ## 1. What did I model?
+This week I modeled the four major options Greeks — delta, gamma, theta, and vega — and visualized how each behaves across a range of stock prices. I then built a delta hedging simulation table for call options, replicating Hull’s Table 19.2, to see how a trader dynamically rebalances a position week by week to maintain delta neutrality.
 
 ## 2. What is the key insight?
-// clean these:
-// insert formulas and explanations for the ipynb
-1. delta: how much the option price changes for every small change in stock price; measures instantaneous changes only
-    a. very important here: delta of options can range between 1 to -1; usually 0 to 1 is for call options and -1 to 0 for put; but we are aiming for delta-zero or delta neutral for the stock position
-    b. long vs short: long is holding that option; short is selling that contract to someone else. long trades mean you own the convexity (in gamma), and short trades mean you owe it. simply, long trades mean you benefit from the movement of the option, and shorts is the other side of it
-    c. continuous delta hedging to rebalance to delta neutrality costs exactly the BSM premium in total, regardless where the stock moves. but it also gets prohibitively expensive. hence it would be better to hedge often using delta if the stock is volatile, and less so when it isn't
-2. theta: time decay of the portfolio; as time passes by the value of the portfolio decreases as time passes by
-    a. it can also be a proxy for gamma
-3. gamma: rate of change in delta
-    a. helpful in understanding how frequent should delta hedging change; smaller gamma = infrequent changes needed, larger gamma = you are at risk of not hedging as often because the prices are changing dramatically
-    b. usually when gamma is positive, theta is negative; portfolio value increases/decreases as the S changes
-    c. when gamma is negative, theta is positive; portfolio value increases/decreases with minimal S changes
-4. vega: rate of change of option price based on implied volatility
+**Delta** measures how much the option price moves for every $1 change in the stock price. For calls it ranges from 0 to 1, and for puts from -1 to 0. The goal of delta hedging is to keep the total position delta at zero — meaning small stock moves don’t affect your net position. Being long an option means you own the convexity; being short means you owe it.
 
-gamma theta and vega all peak at the money
-gamma and vega are identical for calls and puts with the same inputs
-put delta is just theh call s-curve just flipped-- put-call parity is also shown here
-theta going positive for deep OTM puts (which makes sense because time will increase the strike value of that stock)
+**Gamma** is the rate of change of delta. A high gamma means delta is shifting rapidly, which means your hedge needs frequent rebalancing. A low gamma means you can afford to rebalance less often. This is the most practical Greek for a delta hedger — it tells you how unstable your hedge is at any given moment.
+
+**Theta** is time decay — the option loses value simply from time passing. Theta and gamma have an inverse relationship: when you are long gamma you are paying for it through theta bleed every day. You can’t have the upside of gamma without the daily cost of theta.
+
+**Vega** measures sensitivity to implied volatility. A high vega means the option price moves significantly when volatility shifts — which connects directly back to the implied volatility work from Week 3.
+
+One observation that only became clear from the plots: gamma, theta, and vega all peak at the money. ATM options are the most sensitive to everything — price moves, time, and volatility. Deep ITM or OTM options are relatively inert. Also, gamma and vega are identical for calls and puts with the same inputs — only delta and theta differ between the two, which is put-call parity showing up in the Greeks.
+
+Continuous delta hedging costs exactly the BSM premium in total, regardless of which direction the stock moves. The delta hedging table demonstrates this — whether the option expires ITM or OTM, the cumulative hedging cost converges toward the BSM theoretical price. The remaining gap comes from hedging weekly rather than continuously, and from real transaction costs that BSM doesn’t account for.
+
 ## 3. What do the codes do?
-The [Greeks Visualiser](greeks_viz.py) creates the greek curves from 50% of the stock to 1.5x the price of stock. This is to simulate the different points in which the stock will reach a future price given a strike price.
+The [Greeks Visualizer](greek_viz.py) plots delta, gamma, theta, and vega against a range of stock prices from 50% to 150% of the initial price, with the strike marked on each plot. The [Delta Hedging Table](delta_hedge.py) simulates a GBM stock path over n weeks, computes the delta hedge at each step using N(d₁), and tracks shares purchased, cost, cumulative cost, and interest — producing a full replication of Hull’s hedging cost table for both ITM and OTM scenarios.
 
 ## 4. What surprised me?
+I accidentally proved BSM convergence before I even finished the table. I was trying random inputs to force a delta→1 scenario and one run produced a hedging cost almost identical to the BSM price — with completely different parameters and a stock that ended deep OTM. That was the moment Hull’s entire argument clicked, and the math proved the original premise of the readings from Hull.

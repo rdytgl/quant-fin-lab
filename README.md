@@ -72,7 +72,7 @@ Goal: Think like a risk manager.
 
 ---
 
-## Week 4 — Greeks
+## [Week 4 — Greeks](mod2_greeks/week4_greeks/)
 
 ### Concepts
 - Delta
