@@ -75,12 +75,6 @@ V0 = bsm(sigma, S0, k, r, T, option_type)
 d0 = compute_delta(S0)
 tangent = [V0 + d0 * (S - S0) for S in stock_prices]
 
-# Compute greeks
-deltas =[compute_delta(S) for S in stock_prices]
-gammas = [compute_gamma(S) for S in stock_prices]
-thetas = [compute_theta(S) for S in stock_prices]
-vegas = [compute_vega(S) for S in stock_prices]
-
 # Plot the price curve
 plt.figure()
 plt.plot(stock_prices, prices, label="Price")
@@ -98,6 +92,12 @@ plt.title("Price Curve with Delta Tangent")
 plt.xlabel("Stock Price")
 plt.ylabel("Option Price")
 plt.legend()
+
+# Compute greeks
+deltas =[compute_delta(S) for S in stock_prices]
+gammas = [compute_gamma(S) for S in stock_prices]
+thetas = [compute_theta(S) for S in stock_prices]
+vegas = [compute_vega(S) for S in stock_prices]
 
 # Plot the greek values
 fig, axes = plt.subplots(2, 2, figsize=(12,8))
