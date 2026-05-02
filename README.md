@@ -9,8 +9,8 @@ Each week contains the following:
 
 ---
 
-![Status](https://img.shields.io/badge/Currently_On-Week_4_Greeks-blue)
-![Progress](https://img.shields.io/badge/Progress-4%2F12_Weeks-green)
+![Status](https://img.shields.io/badge/Currently_On-Week_5_Delta_Hedging-blue)
+![Progress](https://img.shields.io/badge/Progress-5%2F12_Weeks-green)
 
 ---
 
